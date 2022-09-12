@@ -1,2 +1,2 @@
-# CutyCapt from List
+# CutyCapt from list
 Python script for creating screenshots with the CutyCapt Kali Linux utility from the list
