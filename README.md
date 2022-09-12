@@ -5,7 +5,7 @@ Python script for creating screenshots with the CutyCapt Kali Linux utility from
 1. Clone repository:
 ```git clone https://github.com/whoishacked/CutyCaptList.git```
 2. Open folder:
-```cd CutyCaptList``
+```cd CutyCaptList```
 3. Run script with options:
 ```python3 ccfl.py --ifile=/documents/hostlist.txt --ipath=/documents/output\n```
 
