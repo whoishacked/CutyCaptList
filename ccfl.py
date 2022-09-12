@@ -1,5 +1,7 @@
 import getopt
 import os
+import re
+import subprocess
 import sys
 
 HELP_MESSAGE = ('\nOPTIONS:\n'
@@ -11,8 +13,8 @@ HELP_MESSAGE = ('\nOPTIONS:\n'
 
 
 def main(argv):
-    inputfile = ''
-    outputpath = ''
+    inputfile: str = ''
+    outputpath: str = ''
     try:
         opts, args = getopt.getopt(argv, "hi:o:", ["ifile=", "opath="])
     except getopt.GetoptError:
@@ -31,10 +33,20 @@ def main(argv):
             with open(inputfile, 'r') as infile:
                 data = infile.readlines()
                 for host in data:
-                    cmd = ('cutycapt --url=' + host + ' --out='
-                           + outputpath + ' ' + host + '.png')
-                    os.system(cmd)
-                    print(f'Screenshot of {host} done.')
+                    host = host.replace('\n', '')
+                    filename: str = re.sub('[\W_]+', '', host) + '.png'
+                    cmd: str = ('cutycapt --url=' + host + ' --out='
+                                + outputpath + filename)
+                    subprocess.call(
+                        cmd,
+                        shell=True,
+                        stdout=subprocess.DEVNULL,
+                        stderr=subprocess.STDOUT
+                    )
+                    if os.path.exists(outputpath + filename):
+                        print(f'Screenshot of {host} done.')
+                    else:
+                        print(f'Screenshot wasn\'t created')
         except Exception as error:
             raise Exception(f'File open error: {error}')
 
